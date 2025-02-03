@@ -1,28 +1,32 @@
-import React from "react";
-import { useDrag } from "react-dnd";
+import React from 'react';
+import { useDrag } from 'react-dnd';
+import { Paper, Typography } from '@mui/material';
 
-const DraggableName = ({ name, fromTeam }) => {
+const DraggableName = ({ id, name, fromTeam }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: "NAME",
-    item: { name, fromTeam },
+    type: 'NAME',
+    item: { id, fromTeam },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   }));
 
   return (
-    <div
+    <Paper
       ref={drag}
-      style={{
-        padding: "8px",
-        margin: "4px",
-        backgroundColor: "lightblue",
-        cursor: "move",
+      elevation={1}
+      sx={{
+        p: 1,
+        cursor: 'move',
         opacity: isDragging ? 0.5 : 1,
+        transition: 'opacity 0.3s ease',
+        '&:hover': {
+          backgroundColor: 'action.hover'
+        }
       }}
     >
-      {name}
-    </div>
+      <Typography variant="body2">{name}</Typography>
+    </Paper>
   );
 };
 
